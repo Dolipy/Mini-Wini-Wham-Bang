@@ -6,70 +6,232 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini wham bang</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-        
+
         h1 {
-            color: #333;
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 3rem;
+            letter-spacing: -1.5px;
         }
-        
+
         h4 {
-            color: #666;
+            color: #7f8c8d;
+            font-weight: 400;
+            margin-top: 0;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-size: 1.1rem;
         }
-        
-        input[type="search"] {
-            padding: 10px;
-            width: 200px;
-            margin-right: 10px;
-        }
-        
-        button {
-            padding: 10px 15px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        button:hover {
-            background-color: #024690;
-        }
-        
+
+        /* Container with Glassmorphism feel */
         .div_mini {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1),
+                0 1px 3px rgba(0, 0, 0, 0.05);
+            width: 100%;
             max-width: 400px;
-            margin: auto;
+            text-align: center;
             opacity: 0;
-            animation: growInUp 0.7s forwards;
-            margin-top: 150px;
+            animation: growInUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
-        
+
         @keyframes growInUp {
-            to {
-                opacity: 0.8;
-                transform: scale(150%);
-            }
             from {
+                opacity: 0;
+                transform: scale(0.8) translateY(50px);
+            }
+
+            to {
                 opacity: 1;
-                transform: scale(0.5);
+                transform: scale(1) translateY(0);
             }
         }
-        
+
+        /* Input Styling */
         #search {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #cdcdcd;
-            border-radius: 5px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             box-sizing: border-box;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+            background-color: #f9f9f9;
+            margin-bottom: 15px;
+        }
+
+        #search:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+            background-color: #fff;
+        }
+
+        /* Button Styling */
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #addBtn {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        #addBtn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
+        }
+
+        #addBtn:active {
+            transform: translateY(0);
+        }
+
+        #removeBtn {
+            background-color: #ff4757;
+            color: white;
+        }
+
+        #removeBtn:hover {
+            background-color: #e84118;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 71, 87, 0.2);
+        }
+
+        #removeBtn:active {
+            transform: translateY(0);
+        }
+
+        /* List Items Styling */
+        .empty {
+            margin-top: 25px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .list-item {
+            background-color: #fff;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border-left: 5px solid #007BFF;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 0.3s ease-out;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .list-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .list-item:after {
+            content: '×';
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .list-item:hover:after {
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scrollbar styling */
+        .empty::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .empty::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .empty::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .empty::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .div_mini {
+                padding: 25px 20px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h4 {
+                font-size: 0.8rem;
+                margin-bottom: 25px;
+            }
+
+            #search {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+
+            button {
+                width: 100%;
+                /* Full width buttons on mobile */
+                margin: 5px 0;
+                padding: 12px;
+            }
+
+            /* Flex buttons container if needed, but here block is fine */
         }
     </style>
 </head>
